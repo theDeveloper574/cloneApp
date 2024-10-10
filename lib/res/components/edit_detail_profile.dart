@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maanaap/res/colors.dart';
 
 class EditDetailProfileCompo extends StatelessWidget {
   final IconData iconData;
@@ -8,12 +7,11 @@ class EditDetailProfileCompo extends StatelessWidget {
   final Widget editIcon;
 
   const EditDetailProfileCompo(
-      {Key? key,
+      {super.key,
       required this.iconData,
       required this.name,
       required this.widget,
-      required this.editIcon})
-      : super(key: key);
+      required this.editIcon});
 
   @override
   Widget build(BuildContext context) {

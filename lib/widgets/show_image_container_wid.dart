@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progressive_image/progressive_image.dart';
-import '../res/colors.dart';
+
 import '../utils/utils.dart';
 
 class ShowImageContainerWid extends StatelessWidget {
@@ -9,34 +9,36 @@ class ShowImageContainerWid extends StatelessWidget {
   final String imageHol;
 
   const ShowImageContainerWid(
-      {Key? key,
+      {super.key,
       required this.color,
       required this.imageTap,
-      required this.imageHol})
-      : super(key: key);
+      required this.imageHol});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        GestureDetector(
-          onTap: imageTap,
-          child: Container(
-            // height: 300,
-            // width: 200,
-            decoration: BoxDecoration(
-                border: Border.all(color: color, width: 4.8),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: GestureDetector(
+            onTap: imageTap,
+            child: Container(
+              // height: 300,
+              // width: 200,
+              decoration: BoxDecoration(
+                border: Border.all(color: color, width: 2.8),
                 // color: Colors.red,
-                borderRadius: BorderRadius.circular(10)),
-            child: ProgressiveImage(
-              fit: BoxFit.cover,
-              fadeDuration: Duration(seconds: 5),
-              placeholder: AssetImage('asset/loader_image.gif'),
-              thumbnail: NetworkImage(
-                  "https://images.pexels.com/photos/17077796/pexels-photo-17077796/free-photo-of-palazzo-pesaro-papafava-in-venice.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"),
-              image: NetworkImage(imageHol),
-              width: 200,
-              height: 300,
+                // borderRadius: BorderRadius.circular(10)
+              ),
+              child: ProgressiveImage(
+                fit: BoxFit.cover,
+                fadeDuration: const Duration(seconds: 5),
+                placeholder: const AssetImage('asset/image_load.gif'),
+                thumbnail: NetworkImage(imageHol),
+                image: NetworkImage(imageHol),
+                width: 200,
+                height: 300,
+              ),
             ),
           ),
         ),
@@ -48,12 +50,12 @@ class ShowImageContainerWid extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   "12:34",
                   style: TextStyle(color: Colors.white),
                 ),
                 AppUtils.sizedBox(0.0, 4.0),
-                Icon(
+                const Icon(
                   Icons.done_all_sharp,
                   color: Colors.blue,
                   size: 18,

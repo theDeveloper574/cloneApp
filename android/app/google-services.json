@@ -29,6 +29,13 @@
             {
               "client_id": "136243913230-r2mkn6rb1gj91s9o66piuedvil25k3du.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "136243913230-ejk1c191rqno18m4ceh1uk2kfh5ner35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maanapp.maanaap"
+              }
             }
           ]
         }
@@ -58,6 +65,13 @@
             {
               "client_id": "136243913230-r2mkn6rb1gj91s9o66piuedvil25k3du.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "136243913230-ejk1c191rqno18m4ceh1uk2kfh5ner35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maanapp.maanaap"
+              }
             }
           ]
         }

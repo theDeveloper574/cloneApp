@@ -8,11 +8,10 @@ class CircleImageWidget extends StatelessWidget {
   final Function() onProfileChangeTap;
 
   const CircleImageWidget(
-      {Key? key,
+      {super.key,
       required this.imageProvider,
       required this.onImageChangeTap,
-      required this.onProfileChangeTap})
-      : super(key: key);
+      required this.onProfileChangeTap});
 
   @override
   Widget build(BuildContext context) {

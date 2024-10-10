@@ -1,12 +1,18 @@
 import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maanaap/controllers/services/database_collection.dart';
 import 'package:maanaap/model/userModel.dart';
 import 'package:maanaap/utils/utils.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+
 import '../utils/routes/routes_name.dart';
 
 class SignUpController extends GetxController {
@@ -14,9 +20,11 @@ class SignUpController extends GetxController {
   RxString imagePath = "".obs;
   RxBool isLogInSeen = true.obs;
   RxBool isSignUPSeen = true.obs;
+  File? fileImage;
   // XFile? img;
   RxBool isLoad = false.obs;
   RxBool isLogin = false.obs;
+  File? compressedImg;
 
   bool get loading => isLoad.value;
 
@@ -26,50 +34,139 @@ class SignUpController extends GetxController {
   //firebase auth instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
   //show password for login
-  void isLoginShow(){
-    isLogInSeen.value =! isLogInSeen.value;
-    print(isLogInSeen.value);
+  void isLoginShow() {
+    isLogInSeen.value = !isLogInSeen.value;
     update();
   }
+
   //show password for sign up
-  void isSignUpShow(){
-    isSignUPSeen.value =! isSignUPSeen.value;
-    print(isLogInSeen.value);
+  void isSignUpShow() {
+    isSignUPSeen.value = !isSignUPSeen.value;
     update();
   }
+
   ///image pick from gallery
   Future pickImageGall() async {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (img != null) {
-      imagePath.value = img.path.toString();
-      print('image path');
-      print('image path');
-      print('image path');
-      print(imagePath.toString());
-      print('image path');
-      print('image path');
-      print('image path');
-    } else {
-      print('no image selected');
-      // AppUtils.showFlushBar(context, message,FlushbarPosition.Top);
+    final bytes = await img!.readAsBytes();
+    final kb = bytes.length / 1024;
+    final mb = kb / 1024;
+    // setSendImg(true);
+    if (kDebugMode) {
+      print('original image size:$mb');
     }
+
+    final dir = await path_provider.getTemporaryDirectory();
+    final targetPath = '${dir.absolute.path}/temp.jpg';
+
+    // converting original image to compress it
+    final result = await FlutterImageCompress.compressAndGetFile(
+      img.path,
+      targetPath,
+      minHeight: 1080, //you can play with this to reduce siz
+      minWidth: 1080,
+      quality: 90, // keep this high to get the original quality of image
+    );
+
+    final data = await result!.readAsBytes();
+    final newKb = data.length / 1024;
+    final newMb = newKb / 1024;
+
+    if (kDebugMode) {
+      print('compress image size:$newMb');
+    }
+
+    compressedImg = File(result.path);
+    imagePath.value = compressedImg!.path.toString();
+    if (kDebugMode) {
+      print(imagePath.toString());
+    }
+    // if (img != null) {
+    //   final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+    //   final bytes = await img!.readAsBytes();
+    //   final kb = bytes.length / 1024;
+    //   final mb = kb / 1024;
+    //   // setSendImg(true);
+    //   if (kDebugMode) {
+    //     print('original image size:$mb');
+    //   }
+    //
+    //   final dir = await path_provider.getTemporaryDirectory();
+    //   final targetPath = '${dir.absolute.path}/temp.jpg';
+    //
+    //   // converting original image to compress it
+    //   final result = await FlutterImageCompress.compressAndGetFile(
+    //     img.path,
+    //     targetPath,
+    //     minHeight: 1080, //you can play with this to reduce siz
+    //     minWidth: 1080,
+    //     quality: 90, // keep this high to get the original quality of image
+    //   );
+    //
+    //   final data = await result!.readAsBytes();
+    //   final newKb = data.length / 1024;
+    //   final newMb = newKb / 1024;
+    //
+    //   if (kDebugMode) {
+    //     print('compress image size:$newMb');
+    //   }
+    //
+    //   compressedImg = File(result.path);
+    //   imagePath.value = compressedImg!.path.toString();
+    //   imagePath.value = img.path.toString();
+    //   if (kDebugMode) {
+    //     print(imagePath.toString());
+    //   }
+    // } else {
+    //   if (kDebugMode) {
+    //     print('no image selected');
+    //   }
+    //   // AppUtils.showFlushBar(context, message,FlushbarPosition.Top);
+    // }
   }
 
   ///image pick from camera
   Future pickImageCam() async {
     final img = await ImagePicker().pickImage(source: ImageSource.camera);
-    if (img != null) {
-      imagePath.value = img.path.toString();
-      print('image path');
-      print('image path');
-      print('image path');
-      print(imagePath.toString());
-      print('image path');
-      print('image path');
-      print('image path');
-    } else {
-      print('no image selected');
+    final bytes = await img!.readAsBytes();
+    final kb = bytes.length / 1024;
+    final mb = kb / 1024;
+    // setSendImg(true);
+    if (kDebugMode) {
+      print('original image size:$mb');
     }
+
+    final dir = await path_provider.getTemporaryDirectory();
+    final targetPath = '${dir.absolute.path}/temp.jpg';
+    final result = await FlutterImageCompress.compressAndGetFile(
+      img.path,
+      targetPath,
+      minHeight: 1080, //you can play with this to reduce siz
+      minWidth: 1080,
+      quality: 90, // keep this high to get the original quality of image
+    );
+
+    final data = await result!.readAsBytes();
+    final newKb = data.length / 1024;
+    final newMb = newKb / 1024;
+
+    if (kDebugMode) {
+      print('compress image size:$newMb');
+    }
+
+    compressedImg = File(result.path);
+    imagePath.value = compressedImg!.path.toString();
+    if (kDebugMode) {
+      print(imagePath.toString());
+    }
+    // final img = await ImagePicker().pickImage(source: ImageSource.camera);
+    // if (img != null) {
+    //   imagePath.value = img.path.toString();
+    // } else {
+    //   if (kDebugMode) {
+    //     print('no image selected');
+    //   }
+    // }
   }
 
   ///sign up user from firebase
@@ -96,29 +193,34 @@ class SignUpController extends GetxController {
       setLoading(true);
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      Navigator.pushNamedAndRemoveUntil(
-          context, RouteName.home, (route) => false);
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, RouteName.home, (route) => false);
 
       ///set profile storage
       UploadTask uploadTask = profileImgRef.putFile(File(imagePath.value));
-      await Future.value(uploadTask);
+      // await Future.value(uploadTask);
+      TaskSnapshot snapshot = await uploadTask;
+      var profileDown = await snapshot.ref.getDownloadURL();
 
       ///image profile url
-      var profileUrl = await profileImgRef.getDownloadURL();
+      // var profileUrl = await profileImgRef.getDownloadURL();
 
       ///set user profile model
       UserModel user = UserModel(
           name: name,
           email: email,
           password: password,
-          imageUrl: profileUrl,
+          imageUrl: profileDown,
           userId: docId,
           about: "Hey there! I am using MaanApp.",
           chatId: chatId,
-        isBlock: false
-      );
+          isBlock: false,
+          status: "online");
+
       ///upload to database
       await userDatabase.doc(docId).set(user.toMap());
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteName.home, (route) => false);
       await setLoading(false);
     } on FirebaseException catch (e) {
       setLoading(false);
@@ -135,6 +237,7 @@ class SignUpController extends GetxController {
     try {
       setLogInLoad(true);
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      setStatus("online", _auth.currentUser!.uid);
       Navigator.pushNamedAndRemoveUntil(
           context, RouteName.home, (route) => false);
       setLogInLoad(false);
@@ -143,6 +246,13 @@ class SignUpController extends GetxController {
       AppUtils.showFlushBar(context, e.message.toString());
       // print(e.message.toString());
     }
+  }
+
+  void setStatus(String status, String uid) {
+    FirebaseFirestore.instance
+        .collection("usersProfile")
+        .doc(uid)
+        .update({"status": status});
   }
 }
 //Stream<QuerySnapshot> userSnapshot =

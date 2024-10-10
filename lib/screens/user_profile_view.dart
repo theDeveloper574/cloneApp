@@ -3,7 +3,7 @@ import 'package:maanaap/res/colors.dart';
 import 'package:maanaap/utils/utils.dart';
 
 class UserProfileView extends StatelessWidget {
-  const UserProfileView({Key? key}) : super(key: key);
+  const UserProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {

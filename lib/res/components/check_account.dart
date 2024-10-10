@@ -7,11 +7,10 @@ class CheckAccountCompo extends StatelessWidget {
   final String buttonText;
 
   const CheckAccountCompo(
-      {Key? key,
+      {super.key,
       required this.accountDesc,
       required this.onTap,
-      required this.buttonText})
-      : super(key: key);
+      required this.buttonText});
 
   @override
   Widget build(BuildContext context) {

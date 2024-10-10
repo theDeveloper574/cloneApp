@@ -47,5 +47,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+    <string>Description of why you need the contacts permission.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>... explain why the app uses the microphone here ...</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+     <key>NSCameraUsageDescription</key>
+    	<string>To capture profile photo please grant camera access</string>
+    	<key>NSPhotoLibraryUsageDescription</key>
+       <string>App needs access to photo lib for profile images</string>
 </dict>
 </plist>

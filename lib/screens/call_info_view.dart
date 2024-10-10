@@ -1,16 +1,11 @@
-
-
-
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:maanaap/res/colors.dart';
 import 'package:maanaap/utils/routes/routes_name.dart';
 import 'package:maanaap/utils/utils.dart';
 import 'package:maanaap/widgets/call_info_detail_wid.dart';
 
 class CallInfoView extends StatefulWidget {
-  const CallInfoView({Key? key}) : super(key: key);
+  const CallInfoView({super.key});
 
   @override
   State<CallInfoView> createState() => _CallInfoViewState();
@@ -25,14 +20,15 @@ class _CallInfoViewState extends State<CallInfoView> {
         title: const Text("Call info"),
         actions: [
           GestureDetector(
-            onTap: (){
-              Navigator.pushNamedAndRemoveUntil(context, RouteName.home, (route) => false);
-            },
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, RouteName.home, (route) => false);
+              },
               child: const Icon(Icons.chat)),
           AppUtils.sizedBox(0.0, 10.0),
           PopupMenuButton(
-            padding: EdgeInsets.zero,
-            constraints:const BoxConstraints.expand(width: 190,height: 110),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints.expand(width: 190, height: 110),
               icon: const Icon(
                 Icons.more_vert,
                 color: Colors.white,
@@ -60,14 +56,14 @@ class _CallInfoViewState extends State<CallInfoView> {
       body: Column(
         children: [
           CallInfoDetailAndProfileWidget(
-            onListTap: (){},
+            onListTap: () {},
             nameTitle: "Nauman",
             about: "Hello, I'm using MaanApp",
-            imageProvider:const CircleAvatar(
+            imageProvider: const CircleAvatar(
               backgroundImage: AssetImage("asset/signup.png"),
               radius: 24,
             ),
-            audioCallWid:  Icon(
+            audioCallWid: Icon(
               Icons.phone,
               color: AppColors.defaultColor,
             ),
@@ -76,28 +72,41 @@ class _CallInfoViewState extends State<CallInfoView> {
               color: AppColors.defaultColor,
             ),
           ),
-          Divider(indent: 80,height: 0.0,color: AppColors.defaultColor.withOpacity(0.2),thickness: 0.8,),
+          Divider(
+            indent: 80,
+            height: 0.0,
+            color: AppColors.defaultColor.withOpacity(0.2),
+            thickness: 0.8,
+          ),
           ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.transparent,
-              child: Icon(Icons.call_made,color: AppColors.defaultColor,),
+              child: Icon(
+                Icons.call_made,
+                color: AppColors.defaultColor,
+              ),
             ),
-            title: const Text("Outgoing",style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.black54
-            ),),
+            title: const Text(
+              "Outgoing",
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.black54),
+            ),
             subtitle: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.call,size: 18,),
+                const Icon(
+                  Icons.call,
+                  size: 18,
+                ),
                 AppUtils.sizedBox(0.0, 12.0),
                 const Text("5:34 pm")
               ],
             ),
-            trailing: const Text("Not answered",style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: Colors.black45
-            ),),
+            trailing: const Text(
+              "Not answered",
+              style:
+                  TextStyle(fontWeight: FontWeight.w600, color: Colors.black45),
+            ),
           )
         ],
       ),

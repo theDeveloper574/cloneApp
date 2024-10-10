@@ -14,7 +14,7 @@ import 'package:uuid/uuid.dart';
 String imagePostId = const Uuid().v4();
 
 class SignUpView extends StatefulWidget {
-  const SignUpView({Key? key}) : super(key: key);
+  const SignUpView({super.key});
 
   @override
   State<SignUpView> createState() => _SignUpViewState();
@@ -40,12 +40,8 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.sliderOneColor,
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: const Text("Welcome"),
-      // ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
@@ -54,11 +50,10 @@ class _SignUpViewState extends State<SignUpView> {
             Obx(() {
               return CircleImageWidget(
                 onProfileChangeTap: () {},
-                imageProvider:
-                    pathCon.imagePath == null || pathCon.imagePath.isEmpty
-                        ? const AssetImage('asset/signup.png')
-                        : FileImage(File(pathCon.imagePath.toString()))
-                            as ImageProvider,
+                imageProvider: pathCon.imagePath.isEmpty
+                    ? const AssetImage('asset/signup.png')
+                    : FileImage(File(pathCon.imagePath.toString()))
+                        as ImageProvider,
                 onImageChangeTap: () {
                   Get.defaultDialog(
                       buttonColor: AppColors.defaultColor,
@@ -69,12 +64,14 @@ class _SignUpViewState extends State<SignUpView> {
                       textCancel: 'Camera',
                       cancelTextColor: AppColors.defaultColor,
                       onCancel: () {
-                        print('pick image from gallery');
+                        // print('pick image from gallery');
                         Navigator.pop(context);
+                        pathCon.imagePath.value = '';
                         pathCon.pickImageCam();
                       },
                       onConfirm: () async {
                         Navigator.pop(context);
+                        pathCon.imagePath.value = '';
                         pathCon.pickImageGall();
                       });
                 },
@@ -116,11 +113,13 @@ class _SignUpViewState extends State<SignUpView> {
                 decoration: AppUtils.decoration(
                   hintTe: "Enter Password",
                   widget: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       pathCon.isSignUpShow();
                     },
                     child: Icon(
-                      pathCon.isSignUPSeen.value?Icons.visibility_off: Icons.visibility,
+                      pathCon.isSignUPSeen.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: AppColors.defaultColor,
                       size: 22,
                     ),
@@ -148,8 +147,7 @@ class _SignUpViewState extends State<SignUpView> {
                   } else if (password.text.length < 6) {
                     AppUtils.showFlushBar(
                         context, "Password Cannot Be Less Than Six Digit");
-                  } else if (pathCon.imagePath == null ||
-                      pathCon.imagePath.isEmpty) {
+                  } else if (pathCon.imagePath.isEmpty) {
                     AppUtils.showFlushBar(
                         context, "Please Enter Profile Image");
                   } else {
@@ -157,7 +155,7 @@ class _SignUpViewState extends State<SignUpView> {
                     final now = DateTime.now();
                     var chatId =
                         now.microsecondsSinceEpoch.toString().substring(12);
-                    pathCon.setUser(
+                    await pathCon.setUser(
                         email: email.text.trim(),
                         password: password.text.trim(),
                         context: context,

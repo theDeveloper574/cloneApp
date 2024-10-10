@@ -9,8 +9,7 @@ class ButtonCompo extends StatelessWidget {
   final bool isLoading;
 
   const ButtonCompo(
-      {Key? key, required this.onPress, required this.buttonName, this.isLoading = false})
-      : super(key: key);
+      {super.key, required this.onPress, required this.buttonName, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {

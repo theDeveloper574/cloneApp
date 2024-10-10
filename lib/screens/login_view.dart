@@ -8,7 +8,7 @@ import 'package:maanaap/utils/routes/routes_name.dart';
 import 'package:maanaap/utils/utils.dart';
 
 class LogInView extends StatefulWidget {
-  const LogInView({Key? key}) : super(key: key);
+  const LogInView({super.key});
 
   @override
   State<LogInView> createState() => _LogInViewState();

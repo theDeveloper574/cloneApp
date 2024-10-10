@@ -19,6 +19,8 @@ class RouteName {
   static const String homeSettingsView = "home_settings_view";
   //my profile view
   static const String myProfileView = "my_profile_view";
+  //new chat view
+  static const String newChatView = "new_chat_view";
   //profile image opne view
   // static const String profileImageOpen = "profile_image_view_open";
 }

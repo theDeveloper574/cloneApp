@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:maanaap/controllers/get_method_controllers.dart';
-import 'package:maanaap/res/colors.dart';
 import 'package:maanaap/utils/routes/routes_name.dart';
 import 'package:maanaap/utils/utils.dart';
 import 'package:maanaap/widgets/call_info_detail_wid.dart';
 
+import '../controllers/services/firebase_helper_method.dart';
+
 class HomeSettingsView extends StatelessWidget {
-  HomeSettingsView({Key? key}) : super(key: key);
+  HomeSettingsView({super.key});
   GetMethodController getMethodController = GetMethodController();
 
   @override
@@ -34,7 +35,8 @@ class HomeSettingsView extends StatelessWidget {
           const Divider(),
           InkWell(
               onTap: () async {
-                print('button tapped');
+                await FirebaseHelper.setStatus(
+                    "offline", FirebaseAuth.instance.currentUser!.uid);
                 FirebaseAuth.instance.signOut().then((value) {
                   Navigator.pushNamedAndRemoveUntil(
                       context, RouteName.logIn, (route) => false);

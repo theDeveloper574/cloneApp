@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../res/colors.dart';
 import '../utils/utils.dart';
 
 class CallInfoDetailAndProfileWidget extends StatelessWidget {
@@ -13,20 +12,19 @@ class CallInfoDetailAndProfileWidget extends StatelessWidget {
   final Function() onListTap;
 
   const CallInfoDetailAndProfileWidget(
-      {Key? key,
+      {super.key,
       required this.imageProvider,
       required this.nameTitle,
       required this.about,
       required this.audioCallWid,
       required this.videoCallWid,
-      required this.onListTap})
-      : super(key: key);
+      required this.onListTap});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onListTap,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 1.0),
       leading: imageProvider,
       title: Text(
         nameTitle,
@@ -73,14 +71,13 @@ class ProfileWidget extends StatelessWidget {
   final Function() onListTap;
 
   const ProfileWidget(
-      {Key? key,
+      {super.key,
       required this.imageProvider,
       required this.nameTitle,
       required this.about,
       required this.audioCallWid,
       required this.videoCallWid,
-      required this.onListTap})
-      : super(key: key);
+      required this.onListTap});
 
   @override
   Widget build(BuildContext context) {

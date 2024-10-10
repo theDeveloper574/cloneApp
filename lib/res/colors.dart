@@ -1,9 +1,9 @@
-
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
   static Color whiteColor = const Color(0xffFFFFFF);
+  static Color blackColor = Colors.black;
+  static Color transColor = Colors.transparent;
   static Color defaultColor = const Color(0xff07052A);
   static Color buttonColor = const Color(0xff4D65C0);
   static Color grayFind = const Color(0xff8C919D);
